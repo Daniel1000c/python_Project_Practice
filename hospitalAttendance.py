@@ -11,11 +11,15 @@
         * one of the menu options will display certain days on which there will be bonuses and also showing when workers can take a day off 
 """
 # Constants & Variables
+PASS_MENU_PROMPT_TRIES = 3
 MAX_MENU_TRIES = 4
 TAKE_ATTENDANCE = "1"
 MARK_CALENDER = "2"
 EXTRACURRICULARS = "3"
 QUIT_MENU = "4"
+
+# Import getpass module to hide user passwords
+from getpass import getpass
 
 # Import colorama module to change error texts to red to show error clearly
 import colorama
@@ -35,61 +39,88 @@ def createTitleHeader(tabHeader):
 
 # Create function for employee login
 def employeeLogin():
-    # Create empty list for employee usernames and password
-    loginDatabase = []
-
     # Insert header function for tab section
     createTitleHeader(tabHeader = "\033[1;4mEmployee Attendance\033[0m")
-    # Prompt user if already registered for database
-    employeeLoginCheckpoint = str(input("Are you Already Registered To This Hospital (Yes/No) Or Enter M To Go To Main Screen: "))
+    
+    # Create a counter for menu tries
+    passwordMenuPromptTry = 0
+    
+    # Create while loop to return user to prompt screen to login as new user
+    while True and passwordMenuPromptTry < PASS_MENU_PROMPT_TRIES:
+        # Create empty list for employee usernames and password
+        loginDatabase = []
+        
+        # Prompt user to see if they are registered user or not
+        employeeLoginCheckpoint = str(input("Are you Already Registered To This Hospital (Yes/No) Or Enter M To Go To Main Screen: "))
+        
+        # Create input invalidation for password prompt menu
+        if employeeLoginCheckpoint == "No" and employeeLoginCheckpoint == "Yes" and employeeLoginCheckpoint == "M":
+            passwordMenuPromptTry = 0
 
-    if employeeLoginCheckpoint == "No":
-        createTitleHeader(tabHeader = "Employee Register Information")
+        if employeeLoginCheckpoint == "No":
+            createTitleHeader(tabHeader = "Employee Register Information")
 
         # Prompt user for employee name, Id, birthday, occupation
-        registerName = str(input("Please Enter Employee Name: "))
-        registerBirthday = str(input("Please Enter Birthday: "))
-        registerWorkerId = str(input("Please Enter Worker Id: "))
-        jobTitle = str(input("Please Enter Job Title: "))
-        print()
+            registerName = str(input("Please Enter Employee Name: "))
+            registerBirthday = str(input("Please Enter Birthday: "))
+            registerWorkerId = str(input("Please Enter Worker Id: "))
+            jobTitle = str(input("Please Enter Job Title: "))
+            print()
         
         # Write employee personal info to a file
-        fileObject = open("employeeInfoDatabase.txt","a")
+            fileObject = open("employeeInfoDatabase.txt","a")
 
         # Add items to file after information is inputed
         # Create newline to separate multiple pieces of employee info
-        NEWLINE = "\n"
-        fileObject.write(str(registerName))
-        fileObject.write('          ')
-        fileObject.write(str(registerBirthday))
-        fileObject.write('          ')
-        fileObject.write(str(registerWorkerId))
-        fileObject.write('          ')
-        fileObject.write(str(jobTitle))
-        fileObject.write(NEWLINE)
+            NEWLINE = "\n"
+            fileObject.write(str(registerName))
+            fileObject.write('          ')
+            fileObject.write(str(registerBirthday))
+            fileObject.write('          ')
+            fileObject.write(str(registerWorkerId))
+            fileObject.write('          ')
+            fileObject.write(str(jobTitle))
+            fileObject.write(NEWLINE)
         
-
         # Close file 
-        fileObject.close()
+            fileObject.close()
 
         # Prompt user for new password and username
-        createUsername = str(input("Please Create New Username: "))
-        createPassword = str(input("Please Create New Password: "))
+            createUsername = str(input("Please Create New Username: "))
+            createPassword = str(input("Please Create New Password: "))
 
         # Append username and password to empty list
-        loginDatabase.append(createUsername)
-        loginDatabase.append(createPassword)
+            loginDatabase.append(createUsername)
+            loginDatabase.append(createPassword)
+            loginDatabase.append(NEWLINE)
 
-    elif employeeLoginCheckpoint == "Yes":
-        createTitleHeader(tabHeader = "\033[1;4mEmployee Login\033[0m")
+        elif employeeLoginCheckpoint == "Yes":
+            createTitleHeader(tabHeader = "\033[1;4mEmployee Login\033[0m")
+            print()
+            
+            # Prompt user for username, password, and employee id number
+            employeeUsername = str(input("Please Enter Username: "))
+            
+            # Cover user password and worker id when inputing
+            employeePassword = getpass("Please Enter Password: ")
+            workerId = getpass("Please Enter Worker Id: ")
         
-    elif employeeLoginCheckpoint == "M":
+        elif employeeLoginCheckpoint == "M":
         # Call main function to return user back to main menu
-        print()
-        main()
+            print()
+            main()
         
-    else:
-        print(Fore.RED + "Error ... Invalid Input!!! Has To be Either Yes or No.")
+        else:
+            print(Fore.RED + "Error ... Invalid Input!!! Has To be Either Yes, No, or M.")
+            passwordMenuPromptTry +=1
+        
+        # Lock user from entering more input after try limit and revert user back to main menu
+        if passwordMenuPromptTry == PASS_MENU_PROMPT_TRIES:
+            # Create error message for user and revert user back to menu
+            print()
+            print(Fore.RED + "Error ... Invalid Number Of Inputs")
+            print()
+            main()
 
 # Create function to house main body of program
 def main():
@@ -127,6 +158,9 @@ def main():
             # Creating good bye message when user is done with program
             print("Logging Off. Good Bye")
             print()
+            
+            # Exit out the loop to end program
+            exit()
         else:
             print(Fore.RED + "Error ... User Input Is Incorrect!!! Choose Options (1-4).") 
             print()
