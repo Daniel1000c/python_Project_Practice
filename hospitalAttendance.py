@@ -17,6 +17,11 @@ MARK_CALENDER = "2"
 EXTRACURRICULARS = "3"
 QUIT_MENU = "4"
 
+# Import colorama module to change error texts to red to show error clearly
+import colorama
+from colorama import Fore
+colorama.init(autoreset = True)
+
 # Create function to format title header for each section
 def createTitleHeader(tabHeader):
     # Center header by 70 pixels
@@ -35,9 +40,8 @@ def employeeLogin():
 
     # Insert header function for tab section
     createTitleHeader(tabHeader = "\033[1;4mEmployee Attendance\033[0m")
-
     # Prompt user if already registered for database
-    employeeLoginCheckpoint = str(input("Are you Already Registered To This Hospital (Yes/No): "))
+    employeeLoginCheckpoint = str(input("Are you Already Registered To This Hospital (Yes/No) Or Enter M To Go To Main Screen: "))
 
     if employeeLoginCheckpoint == "No":
         createTitleHeader(tabHeader = "Employee Register Information")
@@ -78,8 +82,14 @@ def employeeLogin():
 
     elif employeeLoginCheckpoint == "Yes":
         createTitleHeader(tabHeader = "\033[1;4mEmployee Login\033[0m")
+        
+    elif employeeLoginCheckpoint == "M":
+        # Call main function to return user back to main menu
+        print()
+        main()
+        
     else:
-        print("Error ... Invalid Input!!! Has To be Either Yes or No.")
+        print(Fore.RED + "Error ... Invalid Input!!! Has To be Either Yes or No.")
 
 # Create function to house main body of program
 def main():
@@ -118,12 +128,12 @@ def main():
             print("Logging Off. Good Bye")
             print()
         else:
-            print("Error ... User Input Is Incorrect!!! Choose Options (1-4).") 
+            print(Fore.RED + "Error ... User Input Is Incorrect!!! Choose Options (1-4).") 
             print()
             driveMenuTries += 1
     
         # Create error message for user if they put too many bad inputs
     if driveMenuTries == MAX_MENU_TRIES:
-        print("Error!!!! User Did Too Many Bad Input. Try Again Later.")
+        print(Fore.RED + "Error!!!! User Did Too Many Bad Input. Too Many Bad Inputs.")
 
 main()
