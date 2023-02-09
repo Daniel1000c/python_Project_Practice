@@ -37,6 +37,8 @@ def createTitleHeader(tabHeader):
     # Create a whitespace for title header to organize better
     print()
 
+# Create function that invalidates either username, password, or id when on password screen
+
 # Create function for employee login
 def employeeLogin():
     # Insert header function for tab section
