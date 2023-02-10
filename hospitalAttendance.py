@@ -37,8 +37,6 @@ def createTitleHeader(tabHeader):
     # Create a whitespace for title header to organize better
     print()
 
-# Create function that invalidates either username, password, or id when on password screen
-
 # Create function for employee login
 def employeeLogin():
     # Insert header function for tab section
@@ -47,11 +45,11 @@ def employeeLogin():
     # Create a counter for menu tries
     passwordMenuPromptTry = 0
     
+    # Create empty list for employee usernames and password
+    loginDatabase = []
+    
     # Create while loop to return user to prompt screen to login as new user
     while True and passwordMenuPromptTry < PASS_MENU_PROMPT_TRIES:
-        # Create empty list for employee usernames and password
-        loginDatabase = []
-        
         # Prompt user to see if they are registered user or not
         employeeLoginCheckpoint = str(input("Are you Already Registered To This Hospital (Yes/No) Or Enter M To Go To Main Screen: "))
         
@@ -60,6 +58,7 @@ def employeeLogin():
             passwordMenuPromptTry = 0
 
         if employeeLoginCheckpoint == "No":
+            print()
             createTitleHeader(tabHeader = "Employee Register Information")
 
         # Prompt user for employee name, Id, birthday, occupation
@@ -90,7 +89,8 @@ def employeeLogin():
         # Prompt user for new password and username
             createUsername = str(input("Please Create New Username: "))
             createPassword = str(input("Please Create New Password: "))
-
+            print()
+            
         # Append username and password to empty list
             loginDatabase.append(createUsername)
             loginDatabase.append(createPassword)
@@ -103,10 +103,18 @@ def employeeLogin():
             # Prompt user for username, password, and employee id number
             employeeUsername = str(input("Please Enter Username: "))
             
-            # Cover user password and worker id when inputing
-            employeePassword = getpass("Please Enter Password: ")
-            workerId = getpass("Please Enter Worker Id: ")
-        
+            # Check if username is in file database
+            for employeeUsername in loginDatabase:
+                if employeeUsername == createUsername in loginDatabase:
+                # Cover user password and worker id when inputing 
+                    employeePassword = getpass("Please Enter Password: ")
+            else:
+                print(Fore.RED + "Error Username Does Not Exist!!")
+                print()
+                
+            
+            # workerId = getpass("Please Enter Worker Id: ")
+
         elif employeeLoginCheckpoint == "M":
         # Call main function to return user back to main menu
             print()
