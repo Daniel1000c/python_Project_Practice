@@ -36,7 +36,11 @@ def createTitleHeader(tabHeader):
 
     # Create a whitespace for title header to organize better
     print()
-
+    
+# Create employee login homepage
+def createHomePage():
+    print("\nHello world")
+    
 # Create function for employee login
 def employeeLogin():
     # Insert header function for tab section
@@ -64,7 +68,6 @@ def employeeLogin():
         # Prompt user for employee name, Id, birthday, occupation
             registerName = str(input("Please Enter Employee Name: "))
             registerBirthday = str(input("Please Enter Birthday: "))
-            registerWorkerId = str(input("Please Enter Worker Id: "))
             jobTitle = str(input("Please Enter Job Title: "))
             print()
         
@@ -78,8 +81,6 @@ def employeeLogin():
             fileObject.write('          ')
             fileObject.write(str(registerBirthday))
             fileObject.write('          ')
-            fileObject.write(str(registerWorkerId))
-            fileObject.write('          ')
             fileObject.write(str(jobTitle))
             fileObject.write(NEWLINE)
         
@@ -89,11 +90,13 @@ def employeeLogin():
         # Prompt user for new password and username
             createUsername = str(input("Please Create New Username: "))
             createPassword = str(input("Please Create New Password: "))
+            registerWorkerId = str(input("Please Enter Worker Id: "))
             print()
             
-        # Append username and password to empty list
+        # Append username, password, and worker id to empty list
             loginDatabase.append(createUsername)
             loginDatabase.append(createPassword)
+            loginDatabase.append(registerWorkerId)
             loginDatabase.append(NEWLINE)
 
         elif employeeLoginCheckpoint == "Yes":
@@ -101,19 +104,29 @@ def employeeLogin():
             print()
             
             # Prompt user for username, password, and employee id number
-            employeeUsername = str(input("Please Enter Username: "))
+            employeeUsername = str(input("\nPlease Enter Username: "))
             
-            # Check if username is in file database
-            for employeeUsername in loginDatabase:
-                if employeeUsername == createUsername in loginDatabase:
-                # Cover user password and worker id when inputing 
-                    employeePassword = getpass("Please Enter Password: ")
-            else:
-                print(Fore.RED + "Error Username Does Not Exist!!")
-                print()
+            if employeeUsername == createUsername and createUsername in loginDatabase:
+                # Prompt user for password once username is correct
+                employeePassword = getpass("\nPlease Enter Password: ")
                 
-            
-            # workerId = getpass("Please Enter Worker Id: ")
+                if employeePassword == createPassword and createPassword in loginDatabase:
+                    # Prompt user for worker id once password is correct
+                    workerId = str(input("\nPlease Enter Worker Id: "))
+                    
+                else:
+                    # Print error message if password is not correct
+                    print(Fore.RED + "Error ... Password Does Not Exist")
+                    print()
+                    
+                    # Bring user to login home page after user enters correct worker id
+                    if workerId == registerWorkerId and registerWorkerId in loginDatabase:
+                        createHomePage()# needs attention
+                    else:
+                            print(Fore.RED + "Error ... Worker Id Does Not Exist!!!")# needs attention
+            else:
+                #print error message if username is not correct
+                print(Fore.RED + "Error ... Username Does Not Exist!!!!")
 
         elif employeeLoginCheckpoint == "M":
         # Call main function to return user back to main menu
