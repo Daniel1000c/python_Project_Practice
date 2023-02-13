@@ -18,6 +18,9 @@ MARK_CALENDER = "2"
 EXTRACURRICULARS = "3"
 QUIT_MENU = "4"
 
+# Import random module to randomize employee hours and supervisors on staff
+import random
+
 # Import getpass module to hide user passwords
 from getpass import getpass
 
@@ -40,6 +43,74 @@ def createTitleHeader(tabHeader):
 # Create employee login homepage
 def createHomePage():
     print("\nHello world")
+
+# Create supervisor, payhours, and holidays function
+def employeeWorkNews():
+    # Constants
+    SUPERVISOR_TAB = "1"
+    PAY_HOURS = "2"
+    HOLIDAYS = "3"
+    EMPLOYEE_OFF_DAYS ="4"
+    QUIT_NEWS_MENU = "5"
+    
+    # Insert header function for tab
+    createTitleHeader( tabHeader = "\033[1;4mWorker's News and Comp\033[0m")
+
+    # Create tuple list for payhours, supervisors, holidays, and offdays
+    # Create tuple list for supervisors on hand
+    hospital_super_viser = ("George Gomez", "Jennifer Taylor", "Naomi Sakura","Tyler Durden","Brad Pitt" )
+    
+    # Create tuple list for work hours given for week
+    workHours = ("10", "20", "30", "40", "50","60")
+    
+    # Create tuple list for offdays
+    workDaysOff = ("Monday", "Tuesday", "Wednesday","Thursday","Friday","Saturday", "Sunday")
+    
+    # Create list for holidays 
+    workHolidays = ("Christmas","Thanksgiving","President's Day","Three King's Day")
+    
+    # Create drive menu for user to select employee options
+    employeeDriveMenu = 0
+    
+    # Prompt user with drive menu
+    while employeeDriveMenu != QUIT_NEWS_MENU:
+        print(Fore.GREEN + "\033[1;4m\t\t\tPlease Enter One Of Following Options\033[0m")
+        print("\t\t\t\tSupervisors On The Floor.")
+        print("\t\t\t\tEmployee Work Hours.")
+        print("\t\t\t\tHolidays.")
+        print("\t\t\t\tEmployee Off Days.")
+        print("\t\t\t\tExit Menu.")
+        employeeNewsMenu = input("\nPlease Choose An Option(1-5): ")
+    
+        # Create menu options if user inputs one of drive menu options
+        if employeeNewsMenu == SUPERVISOR_TAB:
+            print("1")
+        elif employeeNewsMenu == PAY_HOURS:
+            print("2") 
+        elif employeeNewsMenu == HOLIDAYS:
+            print("3")
+        elif employeeNewsMenu == EMPLOYEE_OFF_DAYS:
+            print("4")
+        elif employeeNewsMenu == QUIT_NEWS_MENU:
+            # Prompt user to either revert back to main menu or end program
+            menuExitPrompt = input("\nPress M To Go Back To Main Menu Or E To End Program: ")
+            
+            # Create an if statement to branch the two statements
+            if menuExitPrompt == "M":
+                # Send user back to main menu
+                main()
+            elif menuExitPrompt == "E":
+                # End program if user picks E
+                exit()
+            else:
+                # Print error message if user input is incorrect
+                print(Fore.RED + "\nError ... Incorrect Input!!!! Must be Either M or E")
+                print()
+            
+        else:
+            # Print error message if user menu option is invalid
+            print("Error ... Invalid Input!!!! Must be option (1-5)")
+    
     
 # Create function for employee login
 def employeeLogin():
@@ -56,6 +127,7 @@ def employeeLogin():
     while True and passwordMenuPromptTry < PASS_MENU_PROMPT_TRIES:
         # Prompt user to see if they are registered user or not
         employeeLoginCheckpoint = str(input("Are you Already Registered To This Hospital (Yes/No) Or Enter M To Go To Main Screen: "))
+        print()
         
         # Create input invalidation for password prompt menu
         if employeeLoginCheckpoint == "No" and employeeLoginCheckpoint == "Yes" and employeeLoginCheckpoint == "M":
@@ -63,7 +135,7 @@ def employeeLogin():
 
         if employeeLoginCheckpoint == "No":
             print()
-            createTitleHeader(tabHeader = "Employee Register Information")
+            createTitleHeader(tabHeader = Fore.GREEN + "Employee Register Information")
 
         # Prompt user for employee name, Id, birthday, occupation
             registerName = str(input("Please Enter Employee Name: "))
@@ -100,33 +172,42 @@ def employeeLogin():
             loginDatabase.append(NEWLINE)
 
         elif employeeLoginCheckpoint == "Yes":
-            createTitleHeader(tabHeader = "\033[1;4mEmployee Login\033[0m")
+            createTitleHeader(tabHeader = Fore.GREEN + "\033[1;4mEmployee Login\033[0m")
             print()
             
             # Prompt user for username, password, and employee id number
-            employeeUsername = str(input("\nPlease Enter Username: "))
+            # Create while loop to run user through prompts again if either one is incorrect
+            while True:
+                #Prompt user for username
+                employeeUsername = str(input("\nPlease Enter Username: "))
             
-            if employeeUsername == createUsername and createUsername in loginDatabase:
-                # Prompt user for password once username is correct
-                employeePassword = getpass("\nPlease Enter Password: ")
+                if employeeUsername == createUsername and createUsername in loginDatabase:
+                    # Prompt user for password once username is correct
+                    employeePassword = getpass("\nPlease Enter Password: ")
                 
-                if employeePassword == createPassword and createPassword in loginDatabase:
-                    # Prompt user for worker id once password is correct
-                    workerId = str(input("\nPlease Enter Worker Id: "))
+                    if employeePassword == createPassword and createPassword in loginDatabase:
+                        # Prompt user for worker id once password is correct
+                        workerId = str(input("\nPlease Enter Worker Id: "))
+                    
+                        if workerId == registerWorkerId and registerWorkerId in loginDatabase:
+                            # Direct user to login page once all prompts are correct
+                            createHomePage()
+                            
+                            # Break out of loop once on loginpage
+                            break
+                        
+                        else:
+                            # Print error message if worker is incorrect
+                            print(Fore.RED + "Error ... Worker Id Does Not Exist!!!")
+                        
+                    else:
+                        # Print error message if password is not correct
+                        print(Fore.RED + "Error ... Password Does Not Exist")
+                        print()
                     
                 else:
-                    # Print error message if password is not correct
-                    print(Fore.RED + "Error ... Password Does Not Exist")
-                    print()
-                    
-                    # Bring user to login home page after user enters correct worker id
-                    if workerId == registerWorkerId and registerWorkerId in loginDatabase:
-                        createHomePage()# needs attention
-                    else:
-                            print(Fore.RED + "Error ... Worker Id Does Not Exist!!!")# needs attention
-            else:
-                #print error message if username is not correct
-                print(Fore.RED + "Error ... Username Does Not Exist!!!!")
+                    #print error message if username is not correct
+                    print(Fore.RED + "Error ... Username Does Not Exist!!!!")
 
         elif employeeLoginCheckpoint == "M":
         # Call main function to return user back to main menu
@@ -163,7 +244,7 @@ def main():
         print("\t2. Mark Worker Calendar.")
         print("\t3. Employee Bonuses And News.")
         print("\t4. Log Off.")
-        drive_menu_option = input("Please Choose An Option: ")
+        drive_menu_option = input("\nPlease Choose An Option: ")
 
         # Create input invalidation if user provides bad input
         if drive_menu_option >= TAKE_ATTENDANCE and drive_menu_option <= QUIT_MENU:
@@ -176,7 +257,7 @@ def main():
         elif drive_menu_option == MARK_CALENDER:
             print()
         elif drive_menu_option == EXTRACURRICULARS:
-            print()
+            employeeWorkNews()
         elif drive_menu_option == QUIT_MENU:
             # Creating good bye message when user is done with program
             print("Logging Off. Good Bye")
