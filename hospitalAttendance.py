@@ -12,11 +12,13 @@
 """
 # Constants & Variables
 PASS_MENU_PROMPT_TRIES = 3
-MAX_MENU_TRIES = 3
-TAKE_ATTENDANCE = "1"
-MARK_CALENDER = "2"
-EXTRACURRICULARS = "3"
-QUIT_MENU = "4"
+MAX_MENU_TRIES = 2
+
+class mainMenu:
+    TAKE_ATTENDANCE = "1"
+    MARK_CALENDER = "2"
+    EXTRACURRICULARS = "3"
+    QUIT_MENU = "4"
 
 # Import random module to randomize employee hours and supervisors on staff
 import random
@@ -28,9 +30,18 @@ from getpass import getpass
 import colorama
 from colorama import Fore
 colorama.init(autoreset = True)
+
+# Create class to store menu choice functions
+class superChoiceMenu:
+    SUPERVISOR_ON_CALL = "1"
+    SUPERVISOR_HOSPITAL = "2"
+    SUPERVISOR_QUIT = "3"    
     
 # Create function to format title header for each section
 def createTitleHeader(tabHeader):
+    # Create newline space so that it makes it easier to read for user
+    print()
+    
     # Center header by 70 pixels
     centerHeader = tabHeader.center(100)
 
@@ -47,19 +58,17 @@ def createHomePage():
 # Create supervisor, payhours, and holidays function
 def employeeWorkNews():
     # Constants
-    SUPERVISOR_TAB = "1"
-    PAY_HOURS = "2"
-    HOLIDAYS = "3"
-    EMPLOYEE_OFF_DAYS ="4"
-    QUIT_NEWS_MENU = "5"
+    class employeeTab:
+        SUPERVISOR_TAB = "1"
+        PAY_HOURS = "2"
+        HOLIDAYS = "3"
+        EMPLOYEE_OFF_DAYS ="4"
+        QUIT_NEWS_MENU = "5"
     
     # Insert header function for tab
     createTitleHeader( tabHeader = "\033[1;4mWorker's News and Comp\033[0m")
 
     # Create tuple list for payhours, supervisors, holidays, and offdays
-    # Create tuple list for supervisors on hand
-    hospital_super_viser = ("George Gomez", "Jennifer Taylor", "Naomi Sakura","Tyler Durden","Brad Pitt" )
-    
     # Create tuple list for work hours given for week
     workHours = ("10", "20", "30", "40", "50","60")
     
@@ -73,7 +82,7 @@ def employeeWorkNews():
     employeeDriveMenu = 0
     
     # Prompt user with drive menu
-    while employeeDriveMenu != QUIT_NEWS_MENU:
+    while employeeDriveMenu != employeeTab.QUIT_NEWS_MENU:
         print(Fore.GREEN + "\033[1;4m\t\t\tPlease Enter One Of Following Options\033[0m")
         print("\t\t\t\tSupervisors On The Floor.")
         print("\t\t\t\tEmployee Work Hours.")
@@ -83,17 +92,44 @@ def employeeWorkNews():
         employeeNewsMenu = input("\nPlease Choose An Option(1-5): ")
     
         # Create menu options if user inputs one of drive menu options
-        if employeeNewsMenu == SUPERVISOR_TAB:
-            # Create title header to signify that user is on supervisor tab
-            createTitleHeader(tabHeader = Fore.BLUE + "\033[1;4m\nMemorial Supervisors\033[0m")
+        if employeeNewsMenu == employeeTab.SUPERVISOR_TAB:
+            superVisorMenu = 0
             
-        elif employeeNewsMenu == PAY_HOURS:
+            # Create tuple list for supervisors on hand
+            #hospital_super_viser = random("George Gomez", "Jennifer Taylor", "Naomi Sakura","Tyler Durden","Brad Pitt" )
+            
+            # Create title header to signify that user is on supervisor tab
+            createTitleHeader(tabHeader = Fore.BLUE + "\033[1;4mMemorial Supervisors\033[0m")
+            
+            # Create a menu to display supervisors available for each branch and who is on call on hosiptal floor
+            while superVisorMenu != superChoiceMenu.SUPERVISOR_QUIT:
+               # Prompt user for menu choice
+               print("\t\t\t\tSupervisor On Call.") 
+               print("\t\t\t\tSupervisor Hospital Location.")
+               print("\t\t\t\tRevert To Previous Menu.")
+               superVisorMenu = input("\nChoose An Option:")
+               
+               if superVisorMenu == superChoiceMenu.SUPERVISOR_ON_CALL:
+                     # Create tuple list for supervisors on hand
+                   hospital_super_viser = random("George Gomez", "Jennifer Taylor", "Naomi Sakura","Tyler Durden","Brad Pitt" )
+                   
+                   # Create tab header for branch section
+                   createTitleHeader(tabHeader = Fore.BLUE + "\033[1;4mSupervisor On Call Today\033[0m")
+                   
+                   # Use randomized list of supervisors to display a different supervisor each time when user logins into tab
+                   print(f"The Supervisor On Call Today Is {hospital_super_viser}.")
+                   
+            
+            
+            
+            
+        elif employeeNewsMenu == employeeTab.PAY_HOURS:
             print("2") 
-        elif employeeNewsMenu == HOLIDAYS:
+        elif employeeNewsMenu == employeeTab.HOLIDAYS:
             print("3")
-        elif employeeNewsMenu == EMPLOYEE_OFF_DAYS:
+        elif employeeNewsMenu == employeeTab.EMPLOYEE_OFF_DAYS:
             print("4")
-        elif employeeNewsMenu == QUIT_NEWS_MENU:
+        elif employeeNewsMenu == employeeTab.QUIT_NEWS_MENU:
             # set menu exit prompt to empty string
             menuExitPrompt = ""
             
@@ -119,9 +155,13 @@ def employeeWorkNews():
                 else:
                     # Print error message if user input is incorrect
                     print(Fore.RED + "\nError ... Incorrect Input!!!! Must be Either M or E")
-                    print()
+                    print() 
+                    
+                    # Prompt user again if exit prompt is incorrect
+                    menuExitPrompt = input("Press M To Go Back To Main Menu Or E To End Program: ")
+                    
                     # Increase counter by one if user input is incorrect
-                    exit_menu += 1 # needs attention
+                    exit_menu += 1 
                     
                 # Print out error message if counter is the same as max menu tries
                 if exit_menu == MAX_MENU_TRIES:
@@ -129,7 +169,8 @@ def employeeWorkNews():
                     employeeWorkNews()
         else:
             # Print error message if user menu option is invalid
-            print(Fore.RED + "Error ... Invalid Input!!!! Must be option (1-5)")
+            print(Fore.RED + "\nError ... Invalid Input!!!! Must be option (1-5)")
+            print()
             
     
     
@@ -257,7 +298,7 @@ def main():
 # Create drive menu
 # Create limit counter for amount of tries user has to type
     driveMenuTries = 0  
-    while drive_menu_option != QUIT_MENU and driveMenuTries < MAX_MENU_TRIES:
+    while drive_menu_option != mainMenu.QUIT_MENU and driveMenuTries < MAX_MENU_TRIES:
         # Create options for menu
         print("\nChoose One Of The Following Options:")
         print("\t1. Take Employee Attendance.")
@@ -267,18 +308,18 @@ def main():
         drive_menu_option = input("\nPlease Choose An Option: ")
 
         # Create input invalidation if user provides bad input
-        if drive_menu_option >= TAKE_ATTENDANCE and drive_menu_option <= QUIT_MENU:
+        if drive_menu_option >= mainMenu.TAKE_ATTENDANCE and drive_menu_option <= mainMenu.QUIT_MENU:
             # Resets tries counter if user does provide good input
             driveMenuTries = 0
 
         # Create tabs for menu choices
-        if drive_menu_option == TAKE_ATTENDANCE:
+        if drive_menu_option == mainMenu.TAKE_ATTENDANCE:
            employeeLogin()
-        elif drive_menu_option == MARK_CALENDER:
+        elif drive_menu_option == mainMenu.MARK_CALENDER:
             print()
-        elif drive_menu_option == EXTRACURRICULARS:
+        elif drive_menu_option == mainMenu.EXTRACURRICULARS:
             employeeWorkNews()
-        elif drive_menu_option == QUIT_MENU:
+        elif drive_menu_option == mainMenu.QUIT_MENU:
             # Creating good bye message when user is done with program
             print("Logging Off. Good Bye")
             print()
