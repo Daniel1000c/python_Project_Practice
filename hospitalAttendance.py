@@ -12,7 +12,7 @@
 """
 # Constants & Variables
 PASS_MENU_PROMPT_TRIES = 3
-MAX_MENU_TRIES = 4
+MAX_MENU_TRIES = 3
 TAKE_ATTENDANCE = "1"
 MARK_CALENDER = "2"
 EXTRACURRICULARS = "3"
@@ -28,7 +28,7 @@ from getpass import getpass
 import colorama
 from colorama import Fore
 colorama.init(autoreset = True)
-
+    
 # Create function to format title header for each section
 def createTitleHeader(tabHeader):
     # Center header by 70 pixels
@@ -84,7 +84,9 @@ def employeeWorkNews():
     
         # Create menu options if user inputs one of drive menu options
         if employeeNewsMenu == SUPERVISOR_TAB:
-            print("1")
+            # Create title header to signify that user is on supervisor tab
+            createTitleHeader(tabHeader = Fore.BLUE + "\033[1;4m\nMemorial Supervisors\033[0m")
+            
         elif employeeNewsMenu == PAY_HOURS:
             print("2") 
         elif employeeNewsMenu == HOLIDAYS:
@@ -92,24 +94,43 @@ def employeeWorkNews():
         elif employeeNewsMenu == EMPLOYEE_OFF_DAYS:
             print("4")
         elif employeeNewsMenu == QUIT_NEWS_MENU:
+            # set menu exit prompt to empty string
+            menuExitPrompt = ""
+            
             # Prompt user to either revert back to main menu or end program
             menuExitPrompt = input("\nPress M To Go Back To Main Menu Or E To End Program: ")
             
             # Create an if statement to branch the two statements
-            if menuExitPrompt == "M":
-                # Send user back to main menu
-                main()
-            elif menuExitPrompt == "E":
-                # End program if user picks E
-                exit()
-            else:
-                # Print error message if user input is incorrect
-                print(Fore.RED + "\nError ... Incorrect Input!!!! Must be Either M or E")
-                print()
-            
+            # Create counter for exit menu prompt 
+            exit_menu = 0 
+            while menuExitPrompt != "M" or menuExitPrompt != "E": 
+                # Reset counter if user picks prompt options
+                if menuExitPrompt == "M" or menuExitPrompt == "E":
+                    exit_menu = 0
+                    
+                if menuExitPrompt == "M":
+                    # Send user back to main menu
+                    main()    
+                    
+                elif menuExitPrompt == "E":
+                    # End program if user picks E
+                    exit()   
+                    
+                else:
+                    # Print error message if user input is incorrect
+                    print(Fore.RED + "\nError ... Incorrect Input!!!! Must be Either M or E")
+                    print()
+                    # Increase counter by one if user input is incorrect
+                    exit_menu += 1 # needs attention
+                    
+                # Print out error message if counter is the same as max menu tries
+                if exit_menu == MAX_MENU_TRIES:
+                    print(Fore.RED + "\nError ... Invalid User Choice!!! Going back To Previous Menu")
+                    employeeWorkNews()
         else:
             # Print error message if user menu option is invalid
-            print("Error ... Invalid Input!!!! Must be option (1-5)")
+            print(Fore.RED + "Error ... Invalid Input!!!! Must be option (1-5)")
+            
     
     
 # Create function for employee login
@@ -221,8 +242,7 @@ def employeeLogin():
         # Lock user from entering more input after try limit and revert user back to main menu
         if passwordMenuPromptTry == PASS_MENU_PROMPT_TRIES:
             # Create error message for user and revert user back to menu
-            print()
-            print(Fore.RED + "Error ... Invalid Number Of Inputs")
+            print(Fore.RED + "\nError ... Invalid Number Of Inputs")
             print()
             main()
 
