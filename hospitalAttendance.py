@@ -111,13 +111,16 @@ def employeeWorkNews():
                
                if superVisorMenu == superChoiceMenu.SUPERVISOR_ON_CALL:
                      # Create tuple list for supervisors on hand
-                   hospital_super_viser = random("George Gomez", "Jennifer Taylor", "Naomi Sakura","Tyler Durden","Brad Pitt" )
+                   hospital_super_viser = ("George Gomez", "Jennifer Taylor", "Naomi Sakura","Tyler Durden","Brad Pitt" )
                    
                    # Create tab header for branch section
                    createTitleHeader(tabHeader = Fore.BLUE + "\033[1;4mSupervisor On Call Today\033[0m")
                    
+                   # Create a tuple list randomizer for supervisors on deck
+                   supervisorRandomizer = random.choice(hospital_super_viser)
+                   
                    # Use randomized list of supervisors to display a different supervisor each time when user logins into tab
-                   print(f"The Supervisor On Call Today Is {hospital_super_viser}.")
+                   print(f"The Supervisor On Call Today Is: {supervisorRandomizer}.")
                    
             
             
