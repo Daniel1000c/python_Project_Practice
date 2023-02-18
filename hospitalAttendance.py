@@ -19,6 +19,7 @@ class mainMenu:
     MARK_CALENDER = "2"
     EXTRACURRICULARS = "3"
     QUIT_MENU = "4"
+    
 
 # Import random module to randomize employee hours and supervisors on staff
 import random
@@ -68,16 +69,8 @@ def employeeWorkNews():
     # Insert header function for tab
     createTitleHeader( tabHeader = "\033[1;4mWorker's News and Comp\033[0m")
 
-    # Create tuple list for payhours, supervisors, holidays, and offdays
-    # Create tuple list for work hours given for week
-    workHours = ("10", "20", "30", "40", "50","60")
-    
-    # Create tuple list for offdays
-    workDaysOff = ("Monday", "Tuesday", "Wednesday","Thursday","Friday","Saturday", "Sunday")
-    
-    # Create list for holidays 
-    workHolidays = ("Christmas","Thanksgiving","President's Day","Three King's Day")
-    
+    # Create tuple list for payhours, supervisors, holidays, and offday
+
     # Create drive menu for user to select employee options
     employeeDriveMenu = 0
     
@@ -110,28 +103,95 @@ def employeeWorkNews():
                superVisorMenu = input("\nChoose An Option:")
                
                if superVisorMenu == superChoiceMenu.SUPERVISOR_ON_CALL:
-                     # Create tuple list for supervisors on hand
-                   hospital_super_viser = ("George Gomez", "Jennifer Taylor", "Naomi Sakura","Tyler Durden","Brad Pitt" )
+                   # Create function to create tuple list, and randomize supervisors
+                   def supervisorRandom():  
+                    # Create tuple list for supervisors on hand
+                    hospital_super_viser = ("George Gomez", "Jennifer Taylor", "Naomi Sakura","Tyler Durden","Brad Pitt" )
+                    # Create a tuple list randomizer for supervisors on deck
+                    supervisorRandomizer = random.choice(hospital_super_viser)
+                    
+                    # return supervisorRandomizer to display supervisor names
+                    return supervisorRandomizer
                    
                    # Create tab header for branch section
                    createTitleHeader(tabHeader = Fore.BLUE + "\033[1;4mSupervisor On Call Today\033[0m")
                    
-                   # Create a tuple list randomizer for supervisors on deck
-                   supervisorRandomizer = random.choice(hospital_super_viser)
-                   
                    # Use randomized list of supervisors to display a different supervisor each time when user logins into tab
-                   print(f"The Supervisor On Call Today Is: {supervisorRandomizer}.")
+                   
+                   # Highlight supervisor name with colorama module to make it readable to user
+                   print(f"The Supervisor On Call Today Is: {Fore.MAGENTA + supervisorRandom()}.\n")
+                
+               elif superVisorMenu == superChoiceMenu.SUPERVISOR_HOSPITAL:  
+                    # Call supervisorRandom Function
+                    supervisorRandom()
+                    
+                    # Create tuple list for hospital randomizer
+                    super_visor_location = ("Broward County Hospital", "Miramar Hospital", "Alabama Hospital","Ft. Lauderdale Hospital", "Miami Hospital")
+                    
+                    # Randomize hopsital locations for user to see
+                    hopsitalLocationRandomizer = random.choice(super_visor_location)
+                    
+                    # Print out location where supervisor is located 
+                    print(f"\n{supervisorRandom()} Is Stationed At {Fore.MAGENTA +hopsitalLocationRandomizer}.\n")
                    
             
             
             
             
         elif employeeNewsMenu == employeeTab.PAY_HOURS:
-            print("2") 
+            # Create title header for section
+            createTitleHeader(tabHeader =  Fore.CYAN  + "\033[1;4mEmployee Work Hours This Week\033[0m")
+            
+            # Create function to have pay hour tuple list and randomzier
+            def hourRandomizer():
+                # Create tuple list for work hours given for week
+                workHours = ("5", "10", "15", "20", "25", "30", "35", "40")
+                
+                # Create randomizer for tuple list
+                hoursRandomizer = random.choice(workHours)
+                
+                # Return hour randomizer to display hours able to be worked this week
+                return hoursRandomizer
+            
+            # Print out statment that tells how many hours available this week
+            print(f"\nHello Team, The Amount Of Hours This Week For Grabs Is {Fore.MAGENTA + hourRandomizer()} Hours.\n")
         elif employeeNewsMenu == employeeTab.HOLIDAYS:
-            print("3")
+            # Create title header for section
+            createTitleHeader(tabHeader = Fore.LIGHTBLUE_EX + "\033[1;4mEmployee Holidays\033[0m")
+            
+            # Create function to call employee holidays
+            def holidays():
+                # Create holidays tuple list
+                workHolidays = ("Christmas","Thanksgiving","President's Day","Three King's Day")
+                
+                # Create randomzier for function
+                holidayRandomizer = random.choice(workHolidays)
+                
+                # Return holiday randomizer to display holidays present with days present
+                return holidayRandomizer
+            
+            def workWeek():
+                # Create week tuple list
+                week = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+                
+                 # Create randomzier for function
+                weekRandomizer = random.choice(week)
+                
+                # Return week randomzier to show week day
+                return weekRandomizer
+
+            # Print out holidays available
+            print(f"\nThe Next Holiday Will Be {Fore.MAGENTA + holidays()} On {Fore.MAGENTA +workWeek()}\n")
         elif employeeNewsMenu == employeeTab.EMPLOYEE_OFF_DAYS:
-            print("4")
+            # Create title header
+            createTitleHeader(tabHeader = Fore.LIGHTYELLOW_EX + "\033[1;4mOff Days Available\033[0m")
+            
+            # Call workweek function to perform work week randomizer
+            workWeek()
+            
+            # Print out off days that out available
+            print(f"\nThe Off Day Available This Week Is {Fore.MAGENTA + workWeek()}\n")
+            
         elif employeeNewsMenu == employeeTab.QUIT_NEWS_MENU:
             # set menu exit prompt to empty string
             menuExitPrompt = ""
