@@ -20,7 +20,6 @@ class mainMenu:
     EXTRACURRICULARS = "3"
     QUIT_MENU = "4"
     
-
 # Import random module to randomize employee hours and supervisors on staff
 import random
 
@@ -116,8 +115,6 @@ def employeeWorkNews():
                    # Create tab header for branch section
                    createTitleHeader(tabHeader = Fore.BLUE + "\033[1;4mSupervisor On Call Today\033[0m")
                    
-                   # Use randomized list of supervisors to display a different supervisor each time when user logins into tab
-                   
                    # Highlight supervisor name with colorama module to make it readable to user
                    print(f"The Supervisor On Call Today Is: {Fore.MAGENTA + supervisorRandom()}.\n")
                 
@@ -132,12 +129,8 @@ def employeeWorkNews():
                     hopsitalLocationRandomizer = random.choice(super_visor_location)
                     
                     # Print out location where supervisor is located 
-                    print(f"\n{supervisorRandom()} Is Stationed At {Fore.MAGENTA +hopsitalLocationRandomizer}.\n")
+                    print(f"\n{Fore.MAGENTA + supervisorRandom() + Fore.RESET} Is Stationed At {Fore.MAGENTA +hopsitalLocationRandomizer}.\n")
                    
-            
-            
-            
-            
         elif employeeNewsMenu == employeeTab.PAY_HOURS:
             # Create title header for section
             createTitleHeader(tabHeader =  Fore.CYAN  + "\033[1;4mEmployee Work Hours This Week\033[0m")
@@ -154,7 +147,8 @@ def employeeWorkNews():
                 return hoursRandomizer
             
             # Print out statment that tells how many hours available this week
-            print(f"\nHello Team, The Amount Of Hours This Week For Grabs Is {Fore.MAGENTA + hourRandomizer()} Hours.\n")
+            print(f"\nHello Team, The Amount Of Hours This Week For Grabs Is {Fore.MAGENTA + hourRandomizer() + Fore.RESET} Hours.\n")
+            
         elif employeeNewsMenu == employeeTab.HOLIDAYS:
             # Create title header for section
             createTitleHeader(tabHeader = Fore.LIGHTBLUE_EX + "\033[1;4mEmployee Holidays\033[0m")
@@ -181,7 +175,8 @@ def employeeWorkNews():
                 return weekRandomizer
 
             # Print out holidays available
-            print(f"\nThe Next Holiday Will Be {Fore.MAGENTA + holidays()} On {Fore.MAGENTA +workWeek()}\n")
+            print(f"\nThe Next Holiday Will Be {Fore.MAGENTA + holidays() + Fore.RESET} On {Fore.MAGENTA + workWeek()}\n")
+            
         elif employeeNewsMenu == employeeTab.EMPLOYEE_OFF_DAYS:
             # Create title header
             createTitleHeader(tabHeader = Fore.LIGHTYELLOW_EX + "\033[1;4mOff Days Available\033[0m")
@@ -305,7 +300,28 @@ def employeeLogin():
             while True:
                 #Prompt user for username
                 employeeUsername = str(input("\nPlease Enter Username: "))
-            
+                
+                # Invalidate username is username is not in database
+                if employeeUsername != createUsername and createUsername not in loginDatabase: # needs attention
+                    # Print out error message is username does not exist in login list
+                    print(Fore.RED + "Error .... Username Does Not Exist!!!")
+                    
+                    # Prompt user option if they want to redo username or got back to main menu
+                    usernameContinue = input("\nPress M To Go To Main Menu Or R To Renter Username: ")
+                    
+                    if usernameContinue == "M":
+                        # Revert user back to main menu
+                        main()
+                        
+                    elif usernameContinue == "R":
+                        # Prompt user for username again
+                        employeeUsername = str(input("\nPlease Enter Username: "))
+                        print()
+                        
+                    else:
+                        # Print error message if menu input it not equal to R and M
+                        print(Fore.RED + "\nError ... Invalid Input, Must be (M or R)!!!")
+                    
                 if employeeUsername == createUsername and createUsername in loginDatabase:
                     # Prompt user for password once username is correct
                     employeePassword = getpass("\nPlease Enter Password: ")
