@@ -295,33 +295,15 @@ def employeeLogin():
             createTitleHeader(tabHeader = Fore.GREEN + "\033[1;4mEmployee Login\033[0m")
             print()
             
+             # Make createUsername, create password, and registerId into a empty string to be able to call it during function
+             # Needs attention/ need to find a way to assign createpassword before loop assginment
+            
             # Prompt user for username, password, and employee id number
             # Create while loop to run user through prompts again if either one is incorrect
             while True:
                 #Prompt user for username
                 employeeUsername = str(input("\nPlease Enter Username: "))
                 
-                # Invalidate username is username is not in database
-                if employeeUsername != createUsername and createUsername not in loginDatabase: # needs attention
-                    # Print out error message is username does not exist in login list
-                    print(Fore.RED + "Error .... Username Does Not Exist!!!")
-                    
-                    # Prompt user option if they want to redo username or got back to main menu
-                    usernameContinue = input("\nPress M To Go To Main Menu Or R To Renter Username: ")
-                    
-                    if usernameContinue == "M":
-                        # Revert user back to main menu
-                        main()
-                        
-                    elif usernameContinue == "R":
-                        # Prompt user for username again
-                        employeeUsername = str(input("\nPlease Enter Username: "))
-                        print()
-                        
-                    else:
-                        # Print error message if menu input it not equal to R and M
-                        print(Fore.RED + "\nError ... Invalid Input, Must be (M or R)!!!")
-                    
                 if employeeUsername == createUsername and createUsername in loginDatabase:
                     # Prompt user for password once username is correct
                     employeePassword = getpass("\nPlease Enter Password: ")
