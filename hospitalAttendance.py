@@ -19,7 +19,7 @@ class mainMenu:
     MARK_CALENDER = "2"
     EXTRACURRICULARS = "3"
     QUIT_MENU = "4"
-    
+
 # Import random module to randomize employee hours and supervisors on staff
 import random
 
@@ -53,7 +53,11 @@ def createTitleHeader(tabHeader):
     
 # Create employee login homepage
 def createHomePage():
-    print("\nHello world")
+    # Create title header for home page
+    createTitleHeader(tabHeader = Fore.BLUE + "\033[1;4mMemorial Employee Page\033[0m")
+    
+    # Prompt user with drive menu to see their hours, sick days, floor, emergency phone, etc.
+    
 
 # Create supervisor, payhours, and holidays function
 def employeeWorkNews():
@@ -296,7 +300,9 @@ def employeeLogin():
             print()
             
              # Make createUsername, create password, and registerId into a empty string to be able to call it during function
-             # Needs attention/ need to find a way to assign createpassword before loop assginment
+            createUsername = loginDatabase
+            createPassword = loginDatabase
+            registerWorkerId = loginDatabase
             
             # Prompt user for username, password, and employee id number
             # Create while loop to run user through prompts again if either one is incorrect
@@ -304,15 +310,15 @@ def employeeLogin():
                 #Prompt user for username
                 employeeUsername = str(input("\nPlease Enter Username: "))
                 
-                if employeeUsername == createUsername and createUsername in loginDatabase:
+                if employeeUsername in createUsername:
                     # Prompt user for password once username is correct
                     employeePassword = getpass("\nPlease Enter Password: ")
                 
-                    if employeePassword == createPassword and createPassword in loginDatabase:
+                    if employeePassword in createPassword:
                         # Prompt user for worker id once password is correct
                         workerId = str(input("\nPlease Enter Worker Id: "))
                     
-                        if workerId == registerWorkerId and registerWorkerId in loginDatabase:
+                        if workerId in registerWorkerId:
                             # Direct user to login page once all prompts are correct
                             createHomePage()
                             
@@ -331,6 +337,23 @@ def employeeLogin():
                 else:
                     #print error message if username is not correct
                     print(Fore.RED + "Error ... Username Does Not Exist!!!!")
+                    
+                    # Prompt user if they want to reenter login info or go back to main menu
+                    redoUserLogin = input("\nEnter R Or M If To Go Back To Main Menu Or Retry Login: ")
+                    
+                    # Create while loop to cycle through choices for user to return back to main menu or login
+                    while True:
+                        if redoUserLogin == "M":
+                            # Revert user back to main menu
+                            main()
+                        elif redoUserLogin == "R":
+                            # Revert user back to the start of login process
+                           employeeLogin() 
+                        else:
+                            # Print out error message if user choice is incorrect
+                            print(Fore.RED + "Error !!!! Invalid User Choice")
+
+                    
 
         elif employeeLoginCheckpoint == "M":
         # Call main function to return user back to main menu
