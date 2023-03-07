@@ -53,10 +53,56 @@ def createTitleHeader(tabHeader):
     
 # Create employee login homepage
 def createHomePage():
-    # Create title header for home page
-    createTitleHeader(tabHeader = Fore.BLUE + "\033[1;4mMemorial Employee Page\033[0m")
+    # Create menu number for drive menu
+    homePageCounter = 0
     
+    # Create title header for home page
+    createTitleHeader(tabHeader = Fore.BLUE + "\033[1;4mMemorial Employee Page\033[0m\n")
+    
+    # Create menu class to assign menu prompts for drive menu
+    class homePageMenu:
+        HOURS = "1"
+        FLOORS = "2"
+        PHONE = "3"
+        QUIT = "4"
+        
     # Prompt user with drive menu to see their hours, sick days, floor, emergency phone, etc.
+    while homePageCounter != homePageMenu.QUIT:
+        print(Fore.GREEN + "\t\t\t       Hours Available This Week.\n")
+        print(Fore.CYAN + "\t\t\t       Floor Assigned For Duty.\n")
+        print(Fore.RED + "\t\t\t       Emergency Contact Number.\n")
+        print(Fore.YELLOW + "\t\t\t       Return To Main Menu")
+        employeePage = input("\nPlease Choose An Option: ")
+
+        if employeePage == homePageMenu.HOURS:
+            # Define workhours from employee news and bonus section to display number of hours available to user
+            workHours = ("5", "10", "15", "20", "25", "30", "35", "40")
+            
+            # Create title header for section
+            createTitleHeader(tabHeader = Fore.BLUE + "\033[1;4mHours Available On Hand\033[0m\n")
+            
+            # Define randomzier for hours when showing the amount available
+            employeeWorkHour = random.choice(workHours)
+            
+            # Print out statement that shows how many hours is available to user
+            print(f"The Amount Of Hours On Hand Is {Fore.MAGENTA + employeeWorkHour}")
+        
+        elif employeePage == homePageMenu.FLOORS:
+            print("2")
+            
+        elif employeePage == homePageMenu.PHONE:
+            print("3")
+            
+        elif employeePage == homePageMenu.QUIT:
+            # Revert user back to main menu 
+            main()
+            
+        else:
+            # Print out error is menu option is invalid
+            print(Fore.RED + "Error ... Invalid Menu option!!!!")
+        
+            
+            
     
 
 # Create supervisor, payhours, and holidays function
@@ -110,6 +156,7 @@ def employeeWorkNews():
                    def supervisorRandom():  
                     # Create tuple list for supervisors on hand
                     hospital_super_viser = ("George Gomez", "Jennifer Taylor", "Naomi Sakura","Tyler Durden","Brad Pitt" )
+                    
                     # Create a tuple list randomizer for supervisors on deck
                     supervisorRandomizer = random.choice(hospital_super_viser)
                     
@@ -142,6 +189,7 @@ def employeeWorkNews():
             # Create function to have pay hour tuple list and randomzier
             def hourRandomizer():
                 # Create tuple list for work hours given for week
+                global workHours
                 workHours = ("5", "10", "15", "20", "25", "30", "35", "40")
                 
                 # Create randomizer for tuple list
