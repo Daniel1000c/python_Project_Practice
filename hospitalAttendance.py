@@ -74,24 +74,45 @@ def createHomePage():
         print(Fore.YELLOW + "\t\t\t       Return To Main Menu")
         employeePage = input("\nPlease Choose An Option: ")
 
+        # Define work hours outside of function in order to call it later 
         if employeePage == homePageMenu.HOURS:
-            # Define workhours from employee news and bonus section to display number of hours available to user
-            workHours = ("5", "10", "15", "20", "25", "30", "35", "40")
+            # Create random tuple list for user to grab any hours available
+            hoursForTheWeek = ("10", "15", "5", "11")
             
             # Create title header for section
             createTitleHeader(tabHeader = Fore.BLUE + "\033[1;4mHours Available On Hand\033[0m\n")
             
             # Define randomzier for hours when showing the amount available
-            employeeWorkHour = random.choice(workHours)
+            employeeWorkHour = random.choice(hoursForTheWeek)
             
             # Print out statement that shows how many hours is available to user
-            print(f"The Amount Of Hours On Hand Is {Fore.MAGENTA + employeeWorkHour}")
+            print(f"The Amount Of Hours On Hand Is {Fore.MAGENTA + employeeWorkHour}\n")
         
         elif employeePage == homePageMenu.FLOORS:
-            print("2")
+           # Create title header for section 
+           createTitleHeader(tabHeader = Fore.CYAN + "\033[1;4mFloor Assignment\033[0m\n")
+           
+           # Create tuple list of floors for employee to work
+           hospitalFloors = ("1st Floor", "2nd Floor", "3rd Floor", "4th Floor")
+           
+           # Create randomzier for floors
+           floorRandomizer = random.choice(hospitalFloors)
+           
+           # Print out statement that tells floor assignment
+           print(f"Today You Are Assigned To {Fore.MAGENTA + floorRandomizer}\n")
             
         elif employeePage == homePageMenu.PHONE:
-            print("3")
+            # Create title header for section 
+            createTitleHeader(tabHeader = Fore.RED + "\033[1;4mEmergency Hotline\033[0m\n")
+            
+            # Create tuple list for phones available
+            phoneTuple = ("305-878-2568", "878-985-4768", "456-878-9036")
+            
+            # Create randomzier for phone tuple
+            phoneRandomizer = random.choice(phoneTuple)
+            
+            # Print out statement
+            print(f"The Emergency Hotline Is {Fore.MAGENTA + phoneRandomizer}\n")
             
         elif employeePage == homePageMenu.QUIT:
             # Revert user back to main menu 
@@ -189,7 +210,6 @@ def employeeWorkNews():
             # Create function to have pay hour tuple list and randomzier
             def hourRandomizer():
                 # Create tuple list for work hours given for week
-                global workHours
                 workHours = ("5", "10", "15", "20", "25", "30", "35", "40")
                 
                 # Create randomizer for tuple list
