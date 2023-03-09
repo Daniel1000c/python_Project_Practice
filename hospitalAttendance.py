@@ -19,6 +19,12 @@ class mainMenu:
     MARK_CALENDER = "2"
     EXTRACURRICULARS = "3"
     QUIT_MENU = "4"
+# Import datetiem module to get accurate time of user using program
+import datetime
+from datetime import date
+
+# Import calendar from calendar module to use for third menu option
+import calendar
 
 # Import random module to randomize employee hours and supervisors on staff
 import random
@@ -30,6 +36,12 @@ from getpass import getpass
 import colorama
 from colorama import Fore
 colorama.init(autoreset = True)
+
+# Create class for calendar menu option
+class workCalendar:
+    TIME_DAY = "1"
+    CALENDAR = "2"
+    QUIT = "3"
 
 # Create class to store menu choice functions
 class superChoiceMenu:
@@ -50,6 +62,57 @@ def createTitleHeader(tabHeader):
 
     # Create a whitespace for title header to organize better
     print()
+
+# Create employee calendar for hosiptal menu
+def createWorkCalendar():
+    # Set drive menu option to zero 
+    calendarMenuOption = 0
+    
+    # Create title header for section
+    createTitleHeader(tabHeader = Fore.GREEN + "\033[1;4mMemorial Work Calendar\033[0m\n")   
+    
+    # Create drive menu to choose to see the time and date and another option to show the calendar for the month
+    
+    # Create drive menu to display to user
+    while calendarMenuOption != workCalendar.QUIT:
+        # Prompt user for menu choice
+        print("\t\t\t\t1. Check Date And Time.\n")
+        print("\t\t\t\t2. Check Calendar Month\n")
+        print("\t\t\t\t3. Revert To Main Menu")
+        calendarMenuOption = input("Please Choose An Option: ")
+        
+        # Create branch sections for menu prompts 
+        if calendarMenuOption == "1":
+            # Create title header 
+            createTitleHeader(tabHeader = Fore.BLUE + "\033[1;4mCurrent Date And Time\033[0m\n")
+            
+            # Print out the current date and time of user on program 
+            print(f"The Current Date And Time Is {Fore.CYAN + str(datetime.datetime.now())}\n")
+            
+        elif calendarMenuOption == "2":
+            # Define a variable year to call current year for worker
+            today = date.today()
+            year = today.year
+            
+            # Define a variable month to call current month for worker
+            month = today.month
+            
+            # Create title header 
+            createTitleHeader(tabHeader = Fore.CYAN + "\033[1;4mCurrent Calendar Year And Month\033[0m\n")
+            
+            # Print out current calendar with year and date for user and center it
+            print(calendar.month(year,month))
+            
+        elif calendarMenuOption == "3":
+            # Revert user back to main menu
+            main()
+            
+        else:
+            # Print error message if user inputs wrong option
+            print(Fore.RED + "Error ... Wrong option!!! ")
+            
+            
+     
     
 # Create employee login homepage
 def createHomePage():
@@ -466,11 +529,16 @@ def main():
 
         # Create tabs for menu choices
         if drive_menu_option == mainMenu.TAKE_ATTENDANCE:
+            # Call employee login function in drive menu
            employeeLogin()
+           
         elif drive_menu_option == mainMenu.MARK_CALENDER:
-            print()
+            # Call work calendar function in drive menu
+            createWorkCalendar()
         elif drive_menu_option == mainMenu.EXTRACURRICULARS:
+            # Call work calendar function in drive menu
             employeeWorkNews()
+            
         elif drive_menu_option == mainMenu.QUIT_MENU:
             # Creating good bye message when user is done with program
             print("Logging Off. Good Bye")
