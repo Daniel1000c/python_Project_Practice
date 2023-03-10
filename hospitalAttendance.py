@@ -100,8 +100,11 @@ def createWorkCalendar():
             # Create title header 
             createTitleHeader(tabHeader = Fore.CYAN + "\033[1;4mCurrent Calendar Year And Month\033[0m\n")
             
-            # Print out current calendar with year and date for user and center it
-            print(calendar.month(year,month))
+            # Define a variable called current calendar year to center it in the middle of page for user
+            currentCalendarYear = calendar.month(year,month).center(220)
+            
+            # Print out current calendar with year and date for user
+            print(currentCalendarYear)
             
         elif calendarMenuOption == "3":
             # Revert user back to main menu
