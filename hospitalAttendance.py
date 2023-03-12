@@ -100,8 +100,8 @@ def createWorkCalendar():
             # Create title header 
             createTitleHeader(tabHeader = Fore.CYAN + "\033[1;4mCurrent Calendar Year And Month\033[0m\n")
             
-            # Define a variable called current calendar year to center it in the middle of page for user
-            currentCalendarYear = calendar.month(year,month).center(220)
+            # Define a variable called current calendar 
+            currentCalendarYear = calendar.month(year,month)
             
             # Print out current calendar with year and date for user
             print(currentCalendarYear)
@@ -224,9 +224,6 @@ def employeeWorkNews():
         if employeeNewsMenu == employeeTab.SUPERVISOR_TAB:
             superVisorMenu = 0
             
-            # Create tuple list for supervisors on hand
-            #hospital_super_viser = random("George Gomez", "Jennifer Taylor", "Naomi Sakura","Tyler Durden","Brad Pitt" )
-            
             # Create title header to signify that user is on supervisor tab
             createTitleHeader(tabHeader = Fore.BLUE + "\033[1;4mMemorial Supervisors\033[0m")
             
@@ -238,9 +235,8 @@ def employeeWorkNews():
                print("\t\t\t\tRevert To Previous Menu.")
                superVisorMenu = input("\nChoose An Option:")
                
-               if superVisorMenu == superChoiceMenu.SUPERVISOR_ON_CALL:
-                   # Create function to create tuple list, and randomize supervisors
-                   def supervisorRandom():  
+               # Create a function that allows randomizer to switch supervisor name each time for user
+               def supervisorRandom():  
                     # Create tuple list for supervisors on hand
                     hospital_super_viser = ("George Gomez", "Jennifer Taylor", "Naomi Sakura","Tyler Durden","Brad Pitt" )
                     
@@ -249,16 +245,20 @@ def employeeWorkNews():
                     
                     # return supervisorRandomizer to display supervisor names
                     return supervisorRandomizer
-                   
+                
+               if superVisorMenu == superChoiceMenu.SUPERVISOR_ON_CALL:
+                   # Call supervisorRandom using a variable called supervisor
+                   supervisor = supervisorRandom()
+                  
                    # Create tab header for branch section
                    createTitleHeader(tabHeader = Fore.BLUE + "\033[1;4mSupervisor On Call Today\033[0m")
                    
                    # Highlight supervisor name with colorama module to make it readable to user
-                   print(f"The Supervisor On Call Today Is: {Fore.MAGENTA + supervisorRandom()}.\n")
+                   print(f"The Supervisor On Call Today Is: {Fore.MAGENTA + supervisor}.\n")
                 
-               elif superVisorMenu == superChoiceMenu.SUPERVISOR_HOSPITAL:  
-                    # Call supervisorRandom Function
-                    supervisorRandom()
+               elif superVisorMenu == superChoiceMenu.SUPERVISOR_HOSPITAL:
+                    # Call supervisorRandom function
+                    supervisorName = supervisorRandom()
                     
                     # Create tuple list for hospital randomizer
                     super_visor_location = ("Broward County Hospital", "Miramar Hospital", "Alabama Hospital","Ft. Lauderdale Hospital", "Miami Hospital")
@@ -267,7 +267,8 @@ def employeeWorkNews():
                     hopsitalLocationRandomizer = random.choice(super_visor_location)
                     
                     # Print out location where supervisor is located 
-                    print(f"\n{Fore.MAGENTA + supervisorRandom() + Fore.RESET} Is Stationed At {Fore.MAGENTA +hopsitalLocationRandomizer}.\n")
+                    print(f"\n{Fore.MAGENTA + supervisorName + Fore.RESET} Is Stationed At {Fore.MAGENTA +hopsitalLocationRandomizer}.\n")
+                    
                    
         elif employeeNewsMenu == employeeTab.PAY_HOURS:
             # Create title header for section
