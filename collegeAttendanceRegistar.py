@@ -27,6 +27,23 @@ TAKE_ATTENDANCE = "1"
 DISPLAY = "2"
 LOG_OFF = "3"
 
+# Create function to display file contents of student attendance
+def displayAttendance():
+    # Create title header for section
+    createSectionHeader(tabHeader = Fore.CYAN + "\033[1;4mClass Attendance\033[0m\n")
+    
+    # Open file to read to screen
+    fileObject = open("mahaStudentAttendance.txt")
+    
+    # Read content from file
+    fileContent = fileObject.read()
+    
+    # Display file content to user
+    print(fileContent)
+    
+    # Close file
+    fileObject.close()
+    
 # Create fucntion to center header for each branch section
 def createSectionHeader(tabHeader):
     # Create newline for each section to make it easier to read
@@ -117,7 +134,9 @@ def main():
             createAttendance(studentName = "", studentRollCall = "")
             
         elif menuOption == DISPLAY:
-            print("2")
+            # Call display attendance function to display class to user
+            displayAttendance()
+            
         elif menuOption == LOG_OFF:
             # Display good bye message to user 
             print("Logging Off ... Good Bye.")
