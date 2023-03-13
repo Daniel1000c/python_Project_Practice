@@ -32,17 +32,51 @@ def displayAttendance():
     # Create title header for section
     createSectionHeader(tabHeader = Fore.CYAN + "\033[1;4mClass Attendance\033[0m\n")
     
-    # Open file to read to screen
-    fileObject = open("mahaStudentAttendance.txt")
-    
-    # Read content from file
-    fileContent = fileObject.read()
-    
-    # Display file content to user
-    print(fileContent)
-    
-    # Close file
-    fileObject.close()
+    # Create input invalidation if user file does not exist
+    try:
+        # Open file
+        fileObject = open("mahaStudentAttendance.txt")
+        
+        # Read objects from file
+        fileContent = fileObject.read()
+        
+        # Print contents from file
+        print(fileContent)
+        
+        # Close file
+        fileObject.close()
+        
+    except FileNotFoundError:
+        # Create error message if user file does not exist
+        print(Fore.RED + "Error !!! File Not Found." )
+        
+        # Prompt user if they want to create a file
+        userFile = input("Do You Want To Create A File (Yes/No): ")
+        
+        # Create while loop to create choice
+        while userFile != "No":
+            if userFile == "Yes":
+                # Open New file
+                fileObject = open("mahaStudentAttendance.txt","w")
+                
+                # Close file
+                fileObject.close()
+                
+                # Print out creating file message 
+                print("Creating New File.")
+                
+                # Revert user back to main menu
+                main()
+                
+            elif userFile == "No":
+                # Revert user back to main menu
+                main()
+            else:
+                # Print error message
+                print(Fore.RED + "Error !!! Invalid User Option, Must Use (Yes/No).") 
+                
+                # Prompt user again  
+                userFile = input("\nDo You Want To Create A File (Yes/No): ")    
     
 # Create fucntion to center header for each branch section
 def createSectionHeader(tabHeader):
@@ -60,55 +94,82 @@ def createSectionHeader(tabHeader):
 
 # Create function to prompt user for student name and if tardy, present, or absent
 def createAttendance(studentName, studentRollCall):
+    # Create a list of valid inputs
+    valid_inputs = ["A","P","L"]
+    
     # Prompt professor if they want to take attendance
     professorAttendanceChoice = input("Do You Want To Take Attendance (Y/N): ")
     
-    if professorAttendanceChoice == "Y":
-        # Create title header for section
-        createSectionHeader(tabHeader = Fore.BLUE + "\033[1;4mStudent Attendance\033[0m")
-        # Prompt user if they want to add a student
-        attendance =  input("\nDo You Want To Add A Student (Yes/No): ")
+    while professorAttendanceChoice != "N":
         
-        if attendance == "Yes":
-            while attendance != "No":
-                # Prompt professor for student name
-                studentName = str(input("\nPlease Enter Full Student Name: "))  
-    
-                # Prompt professor if student is late, absent, present
-                studentRollCall = str(input("\nPlease Enter Choices (P,A,L) For Present, Absent, Or Late: "))
-                
-                # Create a file to store student attendance information
-                fileObject = open("mahaStudentAttendance.txt","a")
-                
-                # Write items to file 
-                # Create newline variable to space between names
-                NEWLINE = "\n"
-                # Create title header for section for file for better formatting
-                fileObject.write("|StudentName|        |Student Status|          |Time Recorded|")
-                fileObject.write(NEWLINE)
-                fileObject.write(studentName)
-                fileObject.write("              ")
-                fileObject.write(studentRollCall)
-                fileObject.write("                     ")
-                fileObject.write(str(datetime.datetime.now()))
-                fileObject.write(NEWLINE)
-                fileObject.write(NEWLINE)
-                
-                # Close file once done
-                fileObject.close()
-                
-                # Prompt user again to add another student
-                attendance =  input("\nDo You Want To Add A Student (Yes/No): ")
-                
-        elif attendance == "No":
-            # Revert user back to main menu
-            main()
+        if professorAttendanceChoice == "Y":
+            # Create title header for section
+            createSectionHeader(tabHeader = Fore.BLUE + "\033[1;4mStudent Attendance\033[0m")
             
-        return studentName, studentRollCall
+            # Prompt user if they want to add a student
+            attendance =  input("\nDo You Want To Add A Student (Yes/No): ")
+            
+            while attendance != "No":
+                if attendance == "Yes":
+                    while attendance != "No":
+                        # Prompt professor for student name
+                        studentName = str(input("\nPlease Enter Full Student Name: "))  
     
-    elif professorAttendanceChoice == "N":
-        # Revert professor back to main menu
-        main()
+                        # Prompt professor if student is late, absent, present
+                        studentRollCall = str(input("\nPlease Enter Choices (P,A,L) For Present, Absent, Or Late: "))
+                        
+                        # Create input invalidation for present, late, tardy
+                        while studentRollCall not in valid_inputs:
+                            # Create error message
+                            print(Fore.RED + "Error !!! Invalid Input, Must Be (A/L/P).")
+                            
+                            # Prompt user for choice again
+                            studentRollCall = str(input("\nPlease Enter Choices (P,A,L) For Present, Absent, Or Late: "))
+                
+                        # Create a file to store student attendance information
+                        fileObject = open("mahaStudentAttendance.txt","a")
+                
+                        # Write items to file 
+                        # Create newline variable to space between names
+                        NEWLINE = "\n"
+                        # Create title header for section for file for better formatting
+                        fileObject.write("|StudentName|        |Student Status|          |Time Recorded|")
+                        fileObject.write(NEWLINE)
+                        fileObject.write(studentName)
+                        fileObject.write("              ")
+                        fileObject.write(studentRollCall)
+                        fileObject.write("                     ")
+                        fileObject.write(str(datetime.datetime.now()))
+                        fileObject.write(NEWLINE)
+                        fileObject.write(NEWLINE)
+                
+                        # Close file once done
+                        fileObject.close()
+                
+                        # Prompt user again to add another student
+                        attendance =  input("\nDo You Want To Add A Student (Yes/No): ")
+                
+                elif attendance == "No":
+                    # Revert user back to main menu
+                    main()
+                else:
+                    # Print error message if user input is incorrect
+                    print(Fore.RED + "\nError !!! Invaild user Choice, Please Enter (Yes/No).")
+                
+                    # Prompt user again for choice
+                    attendance =  input("\nDo You Want To Add A Student (Yes/No): ")
+            
+            return studentName, studentRollCall
+    
+        elif professorAttendanceChoice == "N":
+            # Revert professor back to main menu
+            main()
+        else:
+            # Print out error message for incorrect user option
+            print(Fore.RED + "Error !!! Invalid User Option, Must be (Y/N).")
+            
+            # Prompt user again for choice
+            professorAttendanceChoice = input("\nDo You Want To Take Attendance (Y/N): ")
         
 # Create placeholder value for drop down menu option choice
 attendanceOption = 0
@@ -143,6 +204,7 @@ def main():
         
             # Shut down program after user is finished
             exit()
+            
         else:
             # Display error message is user option is invalid
             print(Fore.RED + "Error ... Invalid User Option!!!! Must Be Options (1-3).\n")
