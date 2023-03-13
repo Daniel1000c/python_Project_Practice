@@ -14,6 +14,9 @@
     3. Quit Menu
         - End program after professor is done using application
 """
+# Import datetime module to get accurate time of when attendance was taken.
+import datetime
+
 # Import colorama for comestic applications
 import colorama
 from colorama import Fore
@@ -44,16 +47,38 @@ def createAttendance(studentName, studentRollCall):
     professorAttendanceChoice = input("Do You Want To Take Attendance (Y/N): ")
     
     if professorAttendanceChoice == "Y":
+        # Create title header for section
+        createSectionHeader(tabHeader = Fore.BLUE + "\033[1;4mStudent Attendance\033[0m")
         # Prompt user if they want to add a student
         attendance =  input("\nDo You Want To Add A Student (Yes/No): ")
         
         if attendance == "Yes":
             while attendance != "No":
-            # Prompt professor for student name
+                # Prompt professor for student name
                 studentName = str(input("\nPlease Enter Full Student Name: "))  
     
                 # Prompt professor if student is late, absent, present
                 studentRollCall = str(input("\nPlease Enter Choices (P,A,L) For Present, Absent, Or Late: "))
+                
+                # Create a file to store student attendance information
+                fileObject = open("mahaStudentAttendance.txt","a")
+                
+                # Write items to file 
+                # Create newline variable to space between names
+                NEWLINE = "\n"
+                # Create title header for section for file for better formatting
+                fileObject.write("|StudentName|        |Student Status|          |Time Recorded|")
+                fileObject.write(NEWLINE)
+                fileObject.write(studentName)
+                fileObject.write("              ")
+                fileObject.write(studentRollCall)
+                fileObject.write("                     ")
+                fileObject.write(str(datetime.datetime.now()))
+                fileObject.write(NEWLINE)
+                fileObject.write(NEWLINE)
+                
+                # Close file once done
+                fileObject.close()
                 
                 # Prompt user again to add another student
                 attendance =  input("\nDo You Want To Add A Student (Yes/No): ")
@@ -61,8 +86,9 @@ def createAttendance(studentName, studentRollCall):
         elif attendance == "No":
             # Revert user back to main menu
             main()
-                
-            return studentName, studentRollCall
+            
+        return studentName, studentRollCall
+    
     elif professorAttendanceChoice == "N":
         # Revert professor back to main menu
         main()
