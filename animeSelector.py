@@ -34,4 +34,70 @@
 
 # Output: Display anime selector menu to user
 
+# Import datetime module to get accurate time of when user signed up
+import datetime
+# Import colorama module to decorate menu with color
+import colorama
+from colorama import Fore
+colorama.init(autoreset = True)
+
 # Create a class of menu choices for base drive menu
+class baseMenuChoice:
+    # Write chooses as strings in order to only accepts those inputs
+    LOGIN = "1"
+    NEW_USER = "2"
+    DEVELOPER = "3"
+    SHUTDOWN = "4"
+
+# Create function to center title header for each section
+def createMenuHeader(menuHeader):
+    # Create a newline to separate each header text from other menu options
+    print()
+    
+    # Center header by 150 pixels
+    baseMenuHeader =  menuHeader.center(150)  
+    
+    # Display section header
+    print(baseMenuHeader) 
+    
+    # Create a newline for more separation between text
+    print()
+    
+# Create placeholder menu choice for base menu
+baseMenu = 0 
+
+# Create main function to display base drive menu to user
+def main():
+    # Display base drive menu to user
+    while baseMenu != baseMenuChoice.SHUTDOWN:
+        # Print title header for section
+        createMenuHeader(menuHeader = Fore.CYAN + "\033[1;4mAnime Selector\033[0m")
+
+        # Display menu options to user
+        print(Fore.LIGHTCYAN_EX + "\t\t\t\t\t\t\tLogin.")
+        print(Fore.LIGHTMAGENTA_EX + "\t\t\t\t\t\t\tNew User? Sign Up!")
+        print(Fore.WHITE + "\t\t\t\t\t\t\tDeveloper Settings.")
+        print(Fore.RED + "\t\t\t\t\t\t\tShutdown.")
+        
+        # Prompt user with base menu choice
+        baseMenuOption = input("\tWhat Option Would You Like To Do? ")
+        print()
+        
+        # Create branches for menu choice
+        if baseMenuOption == baseMenuChoice.LOGIN:
+            print("1")
+        elif baseMenuOption == baseMenuChoice.NEW_USER:
+            print("2")
+        elif baseMenuOption == baseMenuChoice.DEVELOPER:
+            print("3")
+        elif baseMenuOption == baseMenuChoice.SHUTDOWN:
+            print("Shutting Down ...")
+            
+            # Exit out of program once user is done with menu
+            exit()
+        else:
+        # Display error message if user input is wrong
+            print(Fore.RED + "Error ... Invalid Input. Must Be Options (1-4).")
+main()
+
+    
