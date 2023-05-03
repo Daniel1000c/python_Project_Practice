@@ -48,6 +48,9 @@ class baseMenuChoice:
     NEW_USER = "2"
     DEVELOPER = "3"
     SHUTDOWN = "4"
+    
+# Create max attempts for main menu to log user out if attempts exceed max attempts
+MAX_BASE_ATTEMPTS = 3
 
 # Create function to center title header for each section
 def createMenuHeader(menuHeader):
@@ -68,8 +71,11 @@ baseMenu = 0
 
 # Create main function to display base drive menu to user
 def main():
+    # Set counter for menu tries until user is locked out
+    baseMenuTries = 0
+    
     # Display base drive menu to user
-    while baseMenu != baseMenuChoice.SHUTDOWN:
+    while baseMenu != baseMenuChoice.SHUTDOWN and baseMenuTries < MAX_BASE_ATTEMPTS:
         # Print title header for section
         createMenuHeader(menuHeader = Fore.CYAN + "\033[1;4mAnime Selector\033[0m")
 
@@ -81,15 +87,26 @@ def main():
         
         # Prompt user with base menu choice
         baseMenuOption = input("\tWhat Option Would You Like To Do? ")
-        print()
         
         # Create branches for menu choice
         if baseMenuOption == baseMenuChoice.LOGIN:
             print("1")
+            
+            # Reset counter is user selects right option
+            baseMenuTries = 0
+            
         elif baseMenuOption == baseMenuChoice.NEW_USER:
             print("2")
+            
+            # Reset counter is user selects right option
+            baseMenuTries = 0
+            
         elif baseMenuOption == baseMenuChoice.DEVELOPER:
             print("3")
+            
+            # Reset counter is user selects right option
+            baseMenuTries = 0
+            
         elif baseMenuOption == baseMenuChoice.SHUTDOWN:
             print("Shutting Down ...")
             
@@ -98,6 +115,15 @@ def main():
         else:
         # Display error message if user input is wrong
             print(Fore.RED + "Error ... Invalid Input. Must Be Options (1-4).")
+            
+            # Add one attempt to counter
+            baseMenuTries += 1
+
+    # lock user out of program if attempts match max attempts
+    if baseMenuTries == MAX_BASE_ATTEMPTS:
+        # Print out error message 
+        print()
+        print(Fore.BLUE + "\t\t\t\t\t\tToo Many Invalid Inputs... Try Again Later.")
 main()
 
     
