@@ -22,5 +22,4 @@
   * Create input validation for prompt if user inputs string or letters
   * Create an error message is user has no money in his account to withdraw money
   * Create an error message if user deposits negative amount of money.
-    
 """
