@@ -23,3 +23,57 @@
   * Create an error message is user has no money in his account to withdraw money
   * Create an error message if user deposits negative amount of money.
 """
+
+# Create title for atm program
+print("Simple Chase Bank")
+print("-"*18)
+print("")
+
+# Create main function
+def main():
+  # Create variable to store user input
+  userInput = 0
+  
+  # Create variable to store user base account
+  userBankAccount = 1000
+  
+  # Create while loop to keep program running until user wants to quit
+  while userInput != 4:
+    
+    # Create menu list for user to choose from
+    print("Choose One Of The Following Options: \n")
+    print("\t1. Check Balance.")
+    print("\t2. Deposit Money.")
+    print("\t3. Withdraw Money.")
+    print("\t4. Quit.")
+  
+    userInput = int(input("\nChoose an Option: "))
+    
+    if userInput == 1:
+      # Create a print statement to reveal bank balance to user
+      print(f"Your total balance is: ${userBankAccount}")
+      
+    elif userInput == 2:
+      # Create a formula to add deposit amount to bank balance
+      depositAmount = int(input("Enter the amount you want to deposit: "))
+      userBankAccount = userBankAccount + depositAmount
+      
+    elif userInput == 3:
+      # Create a subtraction formula to subtract withdraw amount from bank balance
+      bankWithdraw = int(input("Enter the amount you want to withdraw: "))
+      if bankWithdraw > userBankAccount:
+        print("\nInsufficient funds. Please try again.")
+        print()
+      else:
+        userBankAccount = userBankAccount - bankWithdraw
+        
+    elif userInput == 4:
+      # Print goodbye message and exit program
+      print("\nThank you and have a nice day.")
+    else:
+      # Print error message is user doesn't choose correct option
+      print("Invalid option. Please try again.")
+      print()
+  
+# Call main function
+main()
